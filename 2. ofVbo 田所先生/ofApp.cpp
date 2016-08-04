@@ -68,8 +68,12 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+	/********************
+	********************/
 	ofSetHexColor(0xffffff);
 	
+	/********************
+	********************/
 	cam.begin();
 	glPointSize(2.0);
 	glEnable(GL_POINT_SMOOTH);
@@ -77,10 +81,39 @@ void ofApp::draw(){
 	myVbo.draw(GL_POINTS, 0, NUM_PARTICLES);
 	cam.end();
 	
+	/********************
+	********************/
+	clear_VboSetting_gl();
+	
+	/********************
+	********************/
 	string info;
 	info = "vertex num = " + ofToString(WIDTH * HEIGHT, 0) + "\n";
 	info += "FPS = " + ofToString(ofGetFrameRate(), 2);
 	ofDrawBitmapString(info, 30, 30);
+}
+
+/******************************
+descrition
+	ofVboで描画すると、openGlの設定が何らか変わるようだ。
+	この結果、次に来る描画が所望の動作とならないケース多数。
+		次のfunctionが描画されないなど
+			ofDrawBitmapString()
+			image.draw()
+			
+	この対応として、
+		ofCircle(). ofRect().
+	等を1発いれてやることで、OKとなった。
+	おそらく、この関数内で、openGl設定が、また変わるのだろう。
+		α = 0;
+	にて描画する。
+******************************/
+void ofApp::clear_VboSetting_gl()
+{
+	ofSetColor(255, 255, 255, 0);
+	ofCircle(0, 0, 1);
+	
+	ofSetColor(255, 255, 255, 255);
 }
 
 //--------------------------------------------------------------

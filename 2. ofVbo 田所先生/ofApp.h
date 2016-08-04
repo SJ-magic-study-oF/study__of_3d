@@ -35,6 +35,8 @@ class ofApp : public ofBaseApp{
 		ofVec3f myVerts[NUM_PARTICLES];
 		ofFloatColor myColor[NUM_PARTICLES];
 		
+		void clear_VboSetting_gl();
+		
 		
 
 	public:
